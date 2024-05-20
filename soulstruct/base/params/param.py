@@ -602,7 +602,7 @@ class ParamDict(Param):
         if ((flags1[0] and flags1.IntDataOffset) or flags1.LongDataOffset) and _row_data_offset != 0:
             raise ValueError(f"Expected `_row_data_offset` of zero in this `Param`, not: {_row_data_offset}")
         unknown = reader["H"]
-        if unknown not in {0, 1}:
+        if unknown not in {0, 1, 2}:
             raise ValueError(f"Expected `unknown` of 0 or 1 in this `Param`, not: {unknown}")
         paramdef_data_version = reader["H"]
         row_count = reader["H"]

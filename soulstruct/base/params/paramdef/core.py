@@ -129,11 +129,14 @@ class ParamDef(GameFile):
                 kwargs["unicode"] = bool(child.text)
             elif child.tag == "FormatVersion":
                 kwargs["format_version"] = int(child.text)
+            elif child.tag == "Version":
+                kwargs["format_version"] = int(child.text)
             elif child.tag == "Fields":
                 fields = [ParamDefField.from_paramdex_xml(i, node, param_type) for i, node in enumerate(child)]
                 kwargs["fields"] = {f.name: f for f in fields}
             else:
-                raise ValueError(f"Unknown Paramdex XML tag: {child.tag}")
+                #raise ValueError(f"Unknown Paramdex XML tag: {child.tag}")
+                logging.warning(f"{param_type} - Unknown Paramdex XML tag: {child.tag}")
         paramdef = cls(param_type=param_type, **kwargs)
         paramdef.path = Path(xml_path)
         return paramdef
