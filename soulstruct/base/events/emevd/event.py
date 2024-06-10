@@ -13,9 +13,9 @@ from types import GenericAlias
 from soulstruct.base.game_types import GAME_INT_TYPE, Flag, GameObjectInt, GameEnumsManager
 from soulstruct.utilities.binary import *
 
-from .enums import OnRestBehavior
 from .instruction import Instruction, EventArgRepl
 from .event_layers import EventLayers
+from ..enums import OnRestBehavior
 from ..evs.adv_decompiler import AdvancedDecompiler
 
 try:
@@ -260,6 +260,9 @@ class Event(abc.ABC):
         event_layers_table_offset: int,
     ) -> Self:
         event_struct = EventStruct.from_bytes(reader)
+
+        # Defined here in case there are no instructions.
+        instructions = []
 
         if event_struct.instructions_local_offset != -1:
             with reader.temp_offset(instruction_table_offset + event_struct.instructions_local_offset):

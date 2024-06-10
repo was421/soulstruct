@@ -10,7 +10,7 @@ from soulstruct.base.events.emevd.emedf import *
 from soulstruct.darksouls1ptde.maps.constants import get_map_variable_name
 from soulstruct.darksouls1ptde.game_types import *
 from soulstruct.utilities.files import PACKAGE_PATH
-from .enums import *
+from ..enums import *
 
 __all__ = ["EMEDF", "EMEDF_ALIASES", "EMEDF_TESTS", "EMEDF_COMPARISON_TESTS"]
 
@@ -1841,7 +1841,7 @@ EMEDF = {
         },
     },
     (2003, 13): {
-        "alias": "SetNavmeshType",
+        "alias": "SetNavmeshFaceFlag",
         "docstring": """
             Set given navmesh type.
         """,
@@ -1860,9 +1860,9 @@ EMEDF = {
             },
         },
         "partials": {
-            "EnableNavmeshType": dict(operation=BitOperation.Add),
-            "DisableNavmeshType": dict(operation=BitOperation.Delete),
-            "ToggleNavmeshType": dict(operation=BitOperation.Invert),
+            "AddNavmeshFaceFlag": dict(operation=BitOperation.Add),
+            "RemoveNavmeshFaceFlag": dict(operation=BitOperation.Delete),
+            "ToggleNavmeshFaceFlag": dict(operation=BitOperation.Invert),
         },
     },
     (2003, 14): {
@@ -1877,7 +1877,7 @@ EMEDF = {
             "block_id": BLOCK_ID,
             "player_start": {
                 "type": tp.Union[PlayerStart, int],
-                "default": -1,
+                "default": 0,  # unsigned
                 "internal_default": -1,
             },
         },
@@ -2318,7 +2318,7 @@ EMEDF = {
                 damage_animation=-1,
                 cancel_animation=-1,
                 death_animation=-1,
-                standby_exit_animation=1,
+                standby_exit_animation=-1,
             ),
         },
     },
@@ -2372,7 +2372,7 @@ EMEDF = {
         },
     },
     (2004, 14): {
-        "alias": "RotateToFaceEntity",
+        "alias": "FaceEntity",
         "docstring": """
             Rotate a character to face a target map entity of any type.
             WARNING: This instruction will crash its event script (silently) if used on a disabled character! (In DS1 at 
@@ -3456,33 +3456,41 @@ EMEDF = {
 add_common_emedf_info(EMEDF, PACKAGE_PATH("darksouls1ptde/events/emevd/ds1-common.emedf.json"))
 EMEDF_ALIASES, EMEDF_TESTS, EMEDF_COMPARISON_TESTS = build_emedf_aliases_tests(EMEDF)
 
-# Extra tests that use custom instructions from `compiler`.
+# Extra tests that use custom instructions from `compiler` (to auto-detect certain arguments from argument types).
 EMEDF_TESTS |= {
     "ActionButton": {
         "if": "IfActionButton",
     },
     "PlayerHasWeapon": {
         "if": "IfPlayerHasWeapon",
+        "if_not": "IfPlayerDoesNotHaveWeapon",
     },
     "PlayerHasArmor": {
         "if": "IfPlayerHasArmor",
+        "if_not": "IfPlayerDoesNotHaveArmor",
     },
     "PlayerHasRing": {
         "if": "IfPlayerHasRing",
+        "if_not": "IfPlayerDoesNotHaveRing",
     },
     "PlayerHasGood": {
         "if": "IfPlayerHasGood",
+        "if_not": "IfPlayerDoesNotHaveGood",
     },
     "PlayerDoesNotHaveWeapon": {
         "if": "IfPlayerDoesNotHaveWeapon",
+        "if_not": "IfPlayerHasWeapon",
     },
     "PlayerDoesNotHaveArmor": {
         "if": "IfPlayerDoesNotHaveArmor",
+        "if_not": "IfPlayerHasArmor",
     },
     "PlayerDoesNotHaveRing": {
         "if": "IfPlayerDoesNotHaveRing",
+        "if_not": "IfPlayerHasRing",
     },
     "PlayerDoesNotHaveGood": {
         "if": "IfPlayerDoesNotHaveGood",
+        "if_not": "IfPlayerHasGood",
     },
 }

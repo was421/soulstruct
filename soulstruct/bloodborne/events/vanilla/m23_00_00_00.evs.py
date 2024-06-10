@@ -1114,7 +1114,7 @@ def Event_12304810():
     MAIN.Await(OR_1)
     
     EndIfLastConditionResultTrue(input_condition=AND_3)
-    RotateToFaceEntity(PLAYER, 2302800, animation=101130)
+    FaceEntity(PLAYER, 2302800, animation=101130)
     AND_4.Add(CharacterHuman(PLAYER))
     AND_4.Add(CharacterInsideRegion(PLAYER, region=2302801))
     AND_5.Add(CharacterHuman(PLAYER))
@@ -1143,7 +1143,7 @@ def Event_12304811():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, 2302800, animation=101130)
+    FaceEntity(PLAYER, 2302800, animation=101130)
     AND_2.Add(CharacterWhitePhantom(PLAYER))
     AND_2.Add(CharacterInsideRegion(PLAYER, region=2302801))
     AND_3.Add(CharacterWhitePhantom(PLAYER))
@@ -1510,9 +1510,9 @@ def Event_12304730():
     MAIN.Await(OR_1)
     
     EndIfLastConditionResultTrue(input_condition=AND_3)
-    RotateToFaceEntity(PLAYER, 2302810, animation=101130, wait_for_completion=True)
+    FaceEntity(PLAYER, 2302810, animation=101130, wait_for_completion=True)
     if ThisEventFlagDisabled():
-        RotateToFaceEntity(2300810, PLAYER, animation=3008)
+        FaceEntity(2300810, PLAYER, animation=3008)
     AND_4.Add(CharacterHuman(PLAYER))
     AND_4.Add(CharacterInsideRegion(PLAYER, region=2302811))
     AND_5.Add(CharacterHuman(PLAYER))
@@ -1541,7 +1541,7 @@ def Event_12304731():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, 2302810, animation=101130)
+    FaceEntity(PLAYER, 2302810, animation=101130)
     AND_2.Add(CharacterWhitePhantom(PLAYER))
     AND_2.Add(CharacterInsideRegion(PLAYER, region=2302811))
     AND_3.Add(CharacterWhitePhantom(PLAYER))
@@ -1982,7 +1982,7 @@ def Event_12304460(
     MAIN.Await(AND_1)
     
     ResetAnimation(character)
-    RotateToFaceEntity(character, region_1, animation=animation, wait_for_completion=True)
+    FaceEntity(character, region_1, animation=animation, wait_for_completion=True)
     AND_2.Add(CharacterInsideRegion(character, region=region_2))
     if not AND_2:
         return RESTART
@@ -2133,7 +2133,7 @@ def Event_12304505():
     MAIN.Await(AND_1)
     
     ResetAnimation(2300740)
-    RotateToFaceEntity(2300740, 2302800, animation=101130, wait_for_completion=True)
+    FaceEntity(2300740, 2302800, animation=101130, wait_for_completion=True)
     AICommand(2300740, command_id=-1, command_slot=0)
     ReplanAI(2300740)
 
@@ -2422,7 +2422,7 @@ def Event_12300235():
 def Event_12300240():
     """Event 12300240"""
     GotoIfThisEventFlagDisabled(Label.L0)
-    EnableNavmeshType(navmesh_id=2303070, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=2303070, navmesh_type=NavmeshType.Disable)
     EndOfAnimation(obj=2301322, animation_id=1)
     CreateObjectVFX(2301323, vfx_id=750, dummy_id=923240)
     End()
@@ -2432,7 +2432,7 @@ def Event_12300240():
     
     MAIN.Await(ObjectDestroyed(2301320))
     
-    EnableNavmeshType(navmesh_id=2303070, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=2303070, navmesh_type=NavmeshType.Disable)
     ForceAnimation(2301322, 1, wait_for_completion=True)
     DisableObject(2301322)
     CreateObjectVFX(2301323, vfx_id=750, dummy_id=923240)
@@ -3061,7 +3061,7 @@ def Event_12305125():
     
     MAIN.Await(HasAIStatus(2300201, ai_status=AIStatusType.Battle))
     
-    RotateToFaceEntity(2300201, PLAYER, animation=3008)
+    FaceEntity(2300201, PLAYER, animation=3008)
 
 
 @RestartOnRest(12305130)
@@ -3571,7 +3571,7 @@ def Event_12305701():
     
     MAIN.Await(OR_4)
     
-    RotateToFaceEntity(2300710, PLAYER, animation=103040)
+    FaceEntity(2300710, PLAYER, animation=103040)
     ChangePatrolBehavior(2300710, patrol_information_id=2303060)
 
 

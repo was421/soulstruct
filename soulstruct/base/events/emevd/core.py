@@ -100,7 +100,7 @@ class EMEVD(GameFile, abc.ABC):
 
     # Internal usage.
     byte_order: ByteOrder = field(repr=False, default=ByteOrder.LittleEndian)
-    event_signatures: dict[int, EventSignature] = field(repr=False, default=dict)
+    event_signatures: dict[int, EventSignature] = field(repr=False, default_factory=dict)
     # `EMEVD` used to reprocess common event calls. Usually called 'common_func.emevd', but in Bloodborne, was merged
     # with 'common.emevd'. Can be added manually with `apply_common_func()` or supplied with `to_evs` or `write_evs`.
     _common_func: EMEVD | None = field(repr=False, default=None)
@@ -136,6 +136,8 @@ class EMEVD(GameFile, abc.ABC):
                 evs_string, map_name=map_name, script_directory=script_directory, common_func_evs=common_func_evs
             )
         except Exception as ex:
+            import traceback
+            traceback.print_exc()
             raise EMEVDError(f"Error occurred while parsing EVS string: {ex}")
         return cls.from_evs_parser(parser)
 
@@ -389,9 +391,10 @@ class EMEVD(GameFile, abc.ABC):
                 missing_done = set()
                 for game_types, value in enums_manager.get_sorted_missing_items():
                     if "Flag" in game_types:
+                        # We warn about the total number of missing flags, but not each one (generally many).
                         missing_flag_count += 1
                         continue
-                    if (game_types, value) in missing_done:
+                    if (game_types, value) in missing_done or value == 0:
                         continue
                     _LOGGER.warning(
                         f"{self.map_name}: Missing '{game_types}' entity ID: {value}"

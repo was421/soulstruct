@@ -18,7 +18,7 @@ def Constructor():
     DisableFlag(11010580)
     if FlagEnabled(61010610):
         EndOfAnimation(obj=1011101, animation_id=2)
-        EnableNavmeshType(navmesh_id=1013100, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1013100, navmesh_type=NavmeshType.Disable)
     SkipLinesIfClient(22)
     DisableObject(1011994)
     DeleteVFX(1011995, erase_root_only=False)
@@ -534,7 +534,7 @@ def Event_11015390():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1012997)
+    FaceEntity(PLAYER, target_entity=1012997)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -555,7 +555,7 @@ def Event_11015391():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1012997)
+    FaceEntity(PLAYER, target_entity=1012997)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -766,7 +766,7 @@ def Event_11015380():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1012897)
+    FaceEntity(PLAYER, target_entity=1012897)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -787,7 +787,7 @@ def Event_11015381():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1012897)
+    FaceEntity(PLAYER, target_entity=1012897)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -915,7 +915,7 @@ def Event_11015370():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1012887)
+    FaceEntity(PLAYER, target_entity=1012887)
     ForceAnimation(PLAYER, 7410, wait_for_completion=True)
     Restart()
 
@@ -936,7 +936,7 @@ def Event_11015371():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1012887)
+    FaceEntity(PLAYER, target_entity=1012887)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -1544,7 +1544,7 @@ def Event_11010600():
     if FlagDisabled(61010610):
         Event_11010611()
         Restart()
-    EnableNavmeshType(navmesh_id=1013100, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=1013100, navmesh_type=NavmeshType.Disable)
     EnableFlag(11010605)
     ForceAnimation(1011101, 2)
     WaitFrames(frames=60)
@@ -1553,7 +1553,7 @@ def Event_11010600():
     if FlagEnabled(61010610):
         Event_11010611()
         Restart()
-    DisableNavmeshType(navmesh_id=1013100, navmesh_type=NavmeshType.Disable)
+    RemoveNavmeshFaceFlag(navmesh_id=1013100, navmesh_type=NavmeshType.Disable)
     ForceAnimation(1011101, 4)
     WaitFrames(frames=200)
     Event_11010611()
@@ -2742,7 +2742,7 @@ def Event_11010580():
     SkipLinesIfLastConditionResultFalse(9, input_condition=AND_1)
     AddSpecialEffect(PLAYER, 4170)
     SkipLinesIfClient(1)
-    RotateToFaceEntity(PLAYER, target_entity=6480)
+    FaceEntity(PLAYER, target_entity=6480)
     SkipLinesIfHost(1)
     if ThisEventFlagEnabled():
         ForceAnimation(PLAYER, 7895, wait_for_completion=True)
@@ -2840,7 +2840,7 @@ def Event_11015101():
     
     MAIN.Await(CharacterInsideRegion(6540, region=1012998))
     
-    RotateToFaceEntity(6540, target_entity=1012997)
+    FaceEntity(6540, target_entity=1012997)
     ForceAnimation(6540, 7410)
     AICommand(6540, command_id=-1, command_slot=0)
     ReplanAI(6540)
@@ -2898,7 +2898,7 @@ def Event_11015104():
     
     MAIN.Await(CharacterInsideRegion(6590, region=1012998))
     
-    RotateToFaceEntity(6590, target_entity=1012997)
+    FaceEntity(6590, target_entity=1012997)
     ForceAnimation(6590, 7410)
     AICommand(6590, command_id=-1, command_slot=0)
     ReplanAI(6590)

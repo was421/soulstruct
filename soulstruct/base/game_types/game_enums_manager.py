@@ -13,7 +13,7 @@ from enum import Enum, IntEnum
 from pathlib import Path
 from types import ModuleType
 
-from soulstruct.utilities.files import import_arbitrary_file
+from soulstruct.utilities.files import import_arbitrary_module
 from soulstruct.base.game_types import *
 
 _LOGGER = logging.getLogger("soulstruct")
@@ -83,6 +83,9 @@ class GameEnumsManager(abc.ABC):
     # List of `GameObjectInt` types that are valid enum keys (e.g. can appear as EMEVD instruction/event arguments).
     VALID_GAME_TYPES: dict[GAME_INT_TYPE, dict[int, GameObjectInt]]
 
+    # Dictionary of reserved global ID variables like `PLAYER`.
+    RESERVED_GLOBAL_IDS: dict[int, str]
+
     # Maps module stems (e.g. 'm10_01_00_00_enums') to dictionaries mapping game types to `{value: GameEnumInfo}`
     # dictionaries. When an enum is checked out, a 'star_module' can be passed, which will be checked first. If the
     # enum is not found there, the other modules will be checked; if found THERE, only the used enum names will be
@@ -110,7 +113,7 @@ class GameEnumsManager(abc.ABC):
         `Character` enum will appear under the `Character` itself but also the parent `MapPart` key -- but otherwise,
         conflicting values will log warnings or (if under the exact same child type key) raise a `ValueError`.
         """
-        self.modules = {Path(path).name.split(".")[0]: import_arbitrary_file(path) for path in module_paths}
+        self.modules = {Path(path).name.split(".")[0]: import_arbitrary_module(path) for path in module_paths}
         self.enums = {module_stem: {} for module_stem in self.modules}
         self.all_event_ids = [] if all_event_ids is None else all_event_ids
         self.all_common_event_ids = []  # added separately
@@ -215,7 +218,7 @@ class GameEnumsManager(abc.ABC):
         enum_member: IntEnum,
     ):
         if issubclass(game_type, MapEntity):
-            if self._is_protected(enum_member):
+            if enum_member.value in self.RESERVED_GLOBAL_IDS:
                 raise ValueError(
                     f"Enum value {enum_member.value} of `MapEntity` child type `{enum_member.__class__.__name__}` "
                     f"is a protected value and must be changed."
@@ -237,6 +240,10 @@ class GameEnumsManager(abc.ABC):
         for game_enum_name, game_enum_class in self._get_module_members(module_name, module):
             game_enum_class: GAME_INT_TYPE | tp.Iterable
 
+            if len(game_enum_class) == 0:
+                # Empty enum. Ignore.
+                continue
+
             match_found = False
             for enum_member in game_enum_class:
                 # We check each registered game type, as some may be hierarchical.
@@ -251,7 +258,7 @@ class GameEnumsManager(abc.ABC):
                     f"match any of the `VALID_GAME_TYPES` specified for this `GameEnumsManager`."
                 )
 
-    def check_out_enum(
+    def _check_out_enum(
         self,
         enum_value: int,
         *game_types: GAME_INT_TYPE | tp.Sequence[GAME_INT_TYPE],
@@ -369,17 +376,15 @@ class GameEnumsManager(abc.ABC):
         *game_types: GAME_INT_TYPE | tp.Sequence[GAME_INT_TYPE],
         star_module_names: tp.Sequence[str] = None,
     ) -> str:
-        """Calls `check_out_enum()` but only returns `enum_info.get_variable_string()`."""
+        """Calls `_check_out_enum()` but only returns `enum_info.get_variable_string()`."""
 
-        # First, we check for protected PLAYER values.
-        if enum_value == 10000:
-            return "PLAYER"
-        if 10001 <= enum_value <= 10009:
-            return f"CLIENT_PLAYER_{enum_value - 10000}"
+        # First, we check for protected global IDs like `PLAYER` or `TORRENT`.
+        if enum_value in self.RESERVED_GLOBAL_IDS:
+            return self.RESERVED_GLOBAL_IDS[enum_value]
 
         if not star_module_names:
             star_module_names = self.star_module_names
-        game_enum_info = self.check_out_enum(enum_value, *game_types, star_module_names=star_module_names)
+        game_enum_info = self._check_out_enum(enum_value, *game_types, star_module_names=star_module_names)
         return game_enum_info.get_variable_string(star_module_names)
 
     def get_import_lines(self, star_module_names: tp.Collection[str], module_prefix: str) -> str:
@@ -404,16 +409,11 @@ class GameEnumsManager(abc.ABC):
             one_line_suffix = ", ".join(sorted_aliases)
             if len(import_prefix + one_line_suffix) > 119:
                 # Split across multiple lines.
-                multi_line_imports = "\n    ".join(sorted_aliases)
+                multi_line_imports = ",\n    ".join(sorted_aliases)
                 imports += f"{import_prefix}(\n    {multi_line_imports}\n)"
             else:
                 imports += f"{import_prefix}{one_line_suffix}"
 
         return imports
-
-    @staticmethod
-    def _is_protected(value: int) -> bool:
-        """Only checked for `MapEntity` (entity ID) enums."""
-        return 10000 <= value <= 10010
 
     # TODO: Module-writing method.

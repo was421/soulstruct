@@ -21,7 +21,7 @@ from enum import IntEnum
 from pathlib import Path
 
 from soulstruct.utilities.files import read_json
-from .enums import BaseNegatableEMEVDEnum
+from ..enums import BaseNegatableEMEVDEnum
 from .utils import get_coord_entity_type
 
 
@@ -167,6 +167,8 @@ def build_emedf_aliases_tests(emedf: EMEDF_TYPING) -> tuple[dict, dict, dict]:
             continue  # condition tests are handled with `Condition` EVS object and `ConditionGroup` enum
 
         if v["alias"].startswith("If") and not v["alias"].startswith("If_Unknown"):
+
+            # TODO: Need to detect negated versions and add to 'if_not', 'skip_not', 'end_not', 'restart_not'...
 
             test_name = v["alias"].removeprefix("If")
             emedf_tests.setdefault(test_name, {})["if"] = v["alias"]

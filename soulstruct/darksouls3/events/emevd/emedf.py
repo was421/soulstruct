@@ -10,7 +10,7 @@ from soulstruct.base.events.emevd.emedf import *
 from soulstruct.darksouls3.game_types import *
 from soulstruct.darksouls3.maps.constants import get_map_variable_name
 from soulstruct.utilities.files import PACKAGE_PATH
-from .enums import *
+from ..enums import *
 
 __all__ = ["EMEDF", "EMEDF_ALIASES", "EMEDF_TESTS", "EMEDF_COMPARISON_TESTS"]
 
@@ -1832,7 +1832,7 @@ EMEDF = {
         },
     },
     (2003, 13): {
-        "alias": "SetNavmeshType",
+        "alias": "SetNavmeshFaceFlag",
         "docstring": """
             Set given navmesh type.
         """,
@@ -1851,9 +1851,9 @@ EMEDF = {
             },
         },
         "partials": {
-            "EnableNavmeshType": dict(operation=BitOperation.Add),
-            "DisableNavmeshType": dict(operation=BitOperation.Delete),
-            "ToggleNavmeshType": dict(operation=BitOperation.Invert),
+            "AddNavmeshFaceFlag": dict(operation=BitOperation.Add),
+            "RemoveNavmeshFaceFlag": dict(operation=BitOperation.Delete),
+            "ToggleNavmeshFaceFlag": dict(operation=BitOperation.Invert),
         },
     },
     (2003, 14): {
@@ -1868,7 +1868,7 @@ EMEDF = {
             "block_id": BLOCK_ID,
             "player_start": {
                 "type": tp.Union[PlayerStart, int],
-                "default": -1,
+                "default": 0,  # unsigned
                 "internal_default": -1,
             },
         },
@@ -2309,7 +2309,7 @@ EMEDF = {
                 damage_animation=-1,
                 cancel_animation=-1,
                 death_animation=-1,
-                standby_exit_animation=1,
+                standby_exit_animation=-1,
             ),
         },
     },
@@ -2363,14 +2363,11 @@ EMEDF = {
         },
     },
     (2004, 14): {
-        "alias": "RotateToFaceEntity",
+        "alias": "FaceEntityAndForceAnimation",
         "docstring": """
-            Rotate a character to face a target map entity of any type.
-            WARNING: This instruction will crash its event script (silently) if used on a disabled character! (In DS1 at
-            least.)
+            Rotate a character to face a target map entity of any type, then optionally force an animation.
 
-            The Bloodborne+ version allows you to force an animation at the same time (post-rotation) and optionally 
-            wait until that animation is completed. (I assume a value of -1 avoids it.)
+            WARNING: This may crash an event script if `character` is currently disabled!
         """,
         "args": {
             "character": NO_DEFAULT(CharacterTyping) | HIDE_NAME,

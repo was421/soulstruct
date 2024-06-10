@@ -470,7 +470,7 @@ def Event_11515380():
     MAIN.Await(AND_1)
     
     EnableFlag(743)
-    RotateToFaceEntity(PLAYER, target_entity=1512897)
+    FaceEntity(PLAYER, target_entity=1512897)
     ForceAnimation(PLAYER, 7410, wait_for_completion=True)
     Restart()
 
@@ -493,7 +493,7 @@ def Event_11515381():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1512897)
+    FaceEntity(PLAYER, target_entity=1512897)
     if FlagDisabled(11510400):
         PlayCutscene(
             150151,
@@ -725,7 +725,7 @@ def Event_11515390():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1512997)
+    FaceEntity(PLAYER, target_entity=1512997)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -746,7 +746,7 @@ def Event_11515391():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=1512997)
+    FaceEntity(PLAYER, target_entity=1512997)
     ForceAnimation(PLAYER, 7410)
     Restart()
 
@@ -1169,7 +1169,7 @@ def Event_11510210():
     if ThisEventFlagEnabled():
         EndOfAnimation(obj=1511200, animation_id=0)
         End()
-    EnableNavmeshType(navmesh_id=1513200, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=1513200, navmesh_type=NavmeshType.Disable)
     
     MAIN.Await(ActionButton(
         prompt_text=10010400,
@@ -1184,7 +1184,7 @@ def Event_11510210():
     Move(PLAYER, destination=1511200, destination_type=CoordEntityType.Object, dummy_id=121, short_move=True)
     ForceAnimation(PLAYER, 7110)
     ForceAnimation(1511200, 0)
-    DisableNavmeshType(navmesh_id=1513200, navmesh_type=NavmeshType.Disable)
+    RemoveNavmeshFaceFlag(navmesh_id=1513200, navmesh_type=NavmeshType.Disable)
 
 
 @ContinueOnRest(11510211)
@@ -1671,44 +1671,44 @@ def Event_11510340():
     """Event 11510340"""
     if FlagEnabled(11515300):
         EnableMapCollision(collision=1513310)
-        EnableNavmeshType(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
     
         MAIN.Await(FlagDisabled(11515300))
     
         Restart()
     if FlagEnabled(11510303):
         EnableMapCollision(collision=1513310)
-        DisableNavmeshType(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
+        RemoveNavmeshFaceFlag(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
     
         MAIN.Await(FlagEnabled(11515300))
     
         Restart()
     if FlagEnabled(11510302):
         DisableMapCollision(collision=1513310)
-        EnableNavmeshType(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
-        DisableNavmeshType(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
-        DisableNavmeshType(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
-        DisableNavmeshType(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
+        RemoveNavmeshFaceFlag(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
+        RemoveNavmeshFaceFlag(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
+        RemoveNavmeshFaceFlag(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
     
         MAIN.Await(FlagEnabled(11515300))
     
         Restart()
     if FlagEnabled(11510301):
         EnableMapCollision(collision=1513310)
-        EnableNavmeshType(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
-        EnableNavmeshType(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
-        DisableNavmeshType(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
-        DisableNavmeshType(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513350, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513351, navmesh_type=NavmeshType.Disable)
+        AddNavmeshFaceFlag(navmesh_id=1513352, navmesh_type=NavmeshType.Disable)
+        RemoveNavmeshFaceFlag(navmesh_id=1513353, navmesh_type=NavmeshType.Disable)
+        RemoveNavmeshFaceFlag(navmesh_id=1513354, navmesh_type=NavmeshType.Disable)
     
         MAIN.Await(FlagEnabled(11515300))
     
@@ -2251,7 +2251,7 @@ def Event_11510460():
     SkipLinesIfLastConditionResultFalse(10, input_condition=AND_1)
     AddSpecialEffect(PLAYER, 4170)
     SkipLinesIfClient(1)
-    RotateToFaceEntity(PLAYER, target_entity=1512897)
+    FaceEntity(PLAYER, target_entity=1512897)
     EnableFlag(11515350)
     SkipLinesIfHost(1)
     if ThisEventFlagEnabled():
@@ -2302,7 +2302,7 @@ def Event_11510461():
     MAIN.Await(FlagEnabled(11515351))
     
     AddSpecialEffect(PLAYER, 4170)
-    RotateToFaceEntity(PLAYER, target_entity=1510600)
+    FaceEntity(PLAYER, target_entity=1510600)
     ForceAnimation(PLAYER, 7895, wait_for_completion=True)
     ForceAnimation(PLAYER, 7896, loop=True)
     
@@ -3010,7 +3010,7 @@ def Event_11515032():
     
     MAIN.Await(CharacterInsideRegion(6543, region=1512998))
     
-    RotateToFaceEntity(6543, target_entity=1512997)
+    FaceEntity(6543, target_entity=1512997)
     ForceAnimation(6543, 7410)
     AICommand(6543, command_id=-1, command_slot=0)
     ReplanAI(6543)
@@ -3053,7 +3053,7 @@ def Event_11515843(_, flag: int, line_intersects: int, anchor_entity: int, targe
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, target_entity=target_entity)
+    FaceEntity(PLAYER, target_entity=target_entity)
     ForceAnimation(PLAYER, 7410, wait_for_completion=True)
     Unknown_2003_47()
     Restart()

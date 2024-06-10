@@ -875,7 +875,7 @@ def Event_12704840():
     MAIN.Await(OR_1)
     
     EndIfLastConditionResultTrue(input_condition=AND_3)
-    RotateToFaceEntity(PLAYER, 2702800, animation=101130)
+    FaceEntity(PLAYER, 2702800, animation=101130)
     AND_4.Add(CharacterHuman(PLAYER))
     AND_4.Add(CharacterInsideRegion(PLAYER, region=2702801))
     AND_5.Add(CharacterHuman(PLAYER))
@@ -904,7 +904,7 @@ def Event_12704841():
     
     MAIN.Await(AND_1)
     
-    RotateToFaceEntity(PLAYER, 2702800, animation=101130)
+    FaceEntity(PLAYER, 2702800, animation=101130)
     AND_2.Add(CharacterWhitePhantom(PLAYER))
     AND_2.Add(CharacterInsideRegion(PLAYER, region=2702801))
     AND_3.Add(CharacterWhitePhantom(PLAYER))
@@ -1727,14 +1727,14 @@ def Event_12700170():
     DefineLabel(0)
     EndOfAnimation(obj=2701013, animation_id=3)
     DisableFlag(12700173)
-    DisableNavmeshType(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
+    RemoveNavmeshFaceFlag(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
     Goto(Label.L2)
 
     # --- Label 1 --- #
     DefineLabel(1)
     EndOfAnimation(obj=2701013, animation_id=0)
     EnableFlag(12700173)
-    EnableNavmeshType(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
 
     # --- Label 2 --- #
     DefineLabel(2)
@@ -1755,7 +1755,7 @@ def Event_12700171():
     WaitFrames(frames=100)
     DisableFlag(12700174)
     EnableObjectActivation(2701090, obj_act_id=2700000)
-    DisableNavmeshType(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
+    RemoveNavmeshFaceFlag(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
     Restart()
 
 
@@ -1771,7 +1771,7 @@ def Event_12700172():
     EnableFlag(12700173)
     EnableFlag(12700174)
     ForceAnimation(2701013, 2)
-    EnableNavmeshType(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
     WaitFrames(frames=100)
     DisableFlag(12700174)
     EnableObjectActivation(2701090, obj_act_id=2700000)
@@ -2823,7 +2823,7 @@ def Event_12705360():
     MAIN.Await(OR_1)
     
     GotoIfLastConditionResultFalse(Label.L0, input_condition=AND_1)
-    RotateToFaceEntity(2700514, PLAYER, animation=3008)
+    FaceEntity(2700514, PLAYER, animation=3008)
 
     # --- Label 0 --- #
     DefineLabel(0)
@@ -2966,16 +2966,16 @@ def Event_12705490():
     DefineLabel(0)
     EndIfLastConditionResultTrue(input_condition=AND_2)
     StopEvent(event_id=12705491)
-    RotateToFaceEntity(2700145, 2701090, animation=7100)
+    FaceEntity(2700145, 2701090, animation=7100)
     ForceAnimation(2701090, 1)
     WaitFrames(frames=55)
-    EnableNavmeshType(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
+    AddNavmeshFaceFlag(navmesh_id=2703050, navmesh_type=NavmeshType.Disable)
     ForceAnimation(2701013, 2)
     EnableFlag(12700173)
     EnableFlag(12700174)
     WaitFrames(frames=55)
     EnableFlag(12705495)
-    RotateToFaceEntity(2700145, PLAYER, animation=3009)
+    FaceEntity(2700145, PLAYER, animation=3009)
     WaitFrames(frames=45)
     DisableFlag(12700174)
 
@@ -3441,7 +3441,7 @@ def Event_12704460(
     MAIN.Await(AND_1)
     
     ResetAnimation(character)
-    RotateToFaceEntity(character, region_1, animation=animation, wait_for_completion=True)
+    FaceEntity(character, region_1, animation=animation, wait_for_completion=True)
     AND_2.Add(CharacterInsideRegion(character, region=region_2))
     if not AND_2:
         return RESTART
